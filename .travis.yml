@@ -1,3 +1,6 @@
+language: nodejs
+
+
 services:
   - docker
 
