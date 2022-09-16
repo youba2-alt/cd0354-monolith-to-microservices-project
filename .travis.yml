@@ -1,0 +1,20 @@
+services:
+  - docker
+
+install: 
+  - echo "nothing to be installed !"
+
+script: 
+  - docker --version 
+  - docker-compose -f docker-compose-build.yaml build --parallel
+  - docker tag reverseproxy scoma/reverseproxy:latest
+  - docker tag udagram-api-user scoma/udagram-api-user:latest
+  - docker tag udagram-api-feed scoma/udagram-api-feed:latest
+  - docker tag udagram-frontend scoma/udagram-frontend:latest
+
+after_success:
+  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push scoma/reverseproxy:latest
+  - docker push scoma/udagram-api-user:latest
+  - docker push scoma/udagram-api-feed:latest
+  - docker push scoma/udagram-frontend:latest
