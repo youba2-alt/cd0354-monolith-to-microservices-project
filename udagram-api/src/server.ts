@@ -14,7 +14,9 @@ import {V0_FEED_MODELS, V0_USER_MODELS} from './controllers/v0/model.index';
   await sequelize.addModels(V0_USER_MODELS);
 
   console.debug("Initialize database connection...");
-  await sequelize.sync();
+  await sequelize.sync().catch(e=>{
+    console.error("==> ", e)
+  }) ;
 
   const app = express();
   const port = process.env.PORT || 8080;
@@ -45,7 +47,8 @@ import {V0_FEED_MODELS, V0_USER_MODELS} from './controllers/v0/model.index';
 
   // Start the Server
   app.listen( port, () => {
-    console.log( `server running ${config.url}` );
-    console.log( `press CTRL+C to stop server` );
+    console.log( `\n🚀 server running on http://localhost:${port}` );
+    console.log( `🐥 check the front on ${config.url}` );
+    console.log( `❌ press CTRL+C to stop server` );
   } );
 })();
