@@ -17,5 +17,6 @@ spec:
       containers:
       - image: scoma/udagram-frontend:latest
         name: frontend
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
